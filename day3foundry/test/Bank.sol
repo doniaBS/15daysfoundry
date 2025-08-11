@@ -2,23 +2,42 @@
 pragma solidity ^0.8.13;
 
 import {Test, console} from "forge-std/Test.sol";
-import {Counter} from "../src/Counter.sol";
+import {Bank} from "../src/Bank.sol";
 
-contract CounterTest is Test {
-    Counter public counter;
+contract BankTest is Test {
+    Bank bank;
 
     function setUp() public {
-        counter = new Counter();
-        counter.setNumber(0);
+        bank = new Bank();
     }
 
-    function test_Increment() public {
-        counter.increment();
-        assertEq(counter.number(), 1);
+    function testDeposit() public {
+        // Deposit 1 ether
+        bank.deposit{value: 1 ether}();
+        // Check balance is 1 ether
+        assertEq(bank.getBalance(), 1 ether);
     }
 
-    function testFuzz_SetNumber(uint256 x) public {
-        counter.setNumber(x);
-        assertEq(counter.number(), x);
+    function testWithdraw() public {
+        vm.deal(address(this), 10 ether);
+
+        bank.deposit{value: 2 ether}();
+         vm.expectRevert();
+        bank.withdraw(1 ether);
+    }
+
+
+    function testWithdrawInsufficientBalance() public {
+        bank.deposit{value: 1 ether}();
+        // Expect revert because trying to withdraw more than deposited
+        vm.expectRevert();
+        bank.withdraw(2 ether);
+        
+    }
+
+    function testDepositZeroReverts() public {
+        // Expect revert because deposit of zero is not allowed
+        vm.expectRevert("Must deposit more than 0");
+        bank.deposit{value: 0}();
     }
 }
