@@ -1,0 +1,2 @@
+BatchTransferTest:testNaiveBatchTransfer() (gas: 125175)
+BatchTransferTest:testOptimizedBatchTransfer() (gas: 125270)

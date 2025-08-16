@@ -9,7 +9,7 @@ contract BatchTransfer {
             payable(recipients[i]).transfer(amount);
 
         }
-    }
 
-} 
-   
+}
+
+}

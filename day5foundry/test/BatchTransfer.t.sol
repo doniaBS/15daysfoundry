@@ -15,10 +15,15 @@ contract BatchTransferTest is Test {
         naive = new BatchTransfer();
         optimized = new BatchTransferOp();
 
+        // Fund the sender account with enough ETH
+        vm.deal(address(this), 10 ether);
+
         // Example recipients
-        recipients.push(address(0x1));
-        recipients.push(address(0x2));
-        recipients.push(address(0x3));
+        recipients.push(vm.addr(1));
+        recipients.push(vm.addr(2));
+        recipients.push(vm.addr(3));
+        
+
 
     }
 
