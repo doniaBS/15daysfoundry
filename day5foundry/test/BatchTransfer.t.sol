@@ -12,20 +12,22 @@ contract BatchTransferTest is Test {
     address[] recipients;
 
     function setUp() public {
-        naive = new BatchTransferNaive();
-        optimized = new BatchTransferOptimized();
+        naive = new BatchTransfer();
+        optimized = new BatchTransferOp();
 
         // Example recipients
         recipients.push(address(0x1));
         recipients.push(address(0x2));
         recipients.push(address(0x3));
 
+    }
+
         function testNaiveBatchTransfer() public {
-        naive.sendETH{value: 3 ether}(recipients, 1 ether);
+        naive.TransferEth{value: 3 ether}(recipients, 1 ether);
     }
 
     function testOptimizedBatchTransfer() public {
-        optimized.sendETH{value: 3 ether}(recipients, 1 ether);
-    }
+        optimized.SendEthOp{value: 3 ether}(recipients, 1 ether);
     }
 }
+
