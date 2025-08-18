@@ -16,3 +16,9 @@
 [submodule "day6foundry/lib/forge-std"]
 	path = day6foundry/lib/forge-std
 	url = https://github.com/foundry-rs/forge-std
+[submodule "day7foundry/lib/forge-std"]
+	path = day7foundry/lib/forge-std
+	url = https://github.com/foundry-rs/forge-std
+[submodule "day7foundry/lib/openzeppelin-contracts"]
+	path = day7foundry/lib/openzeppelin-contracts
+	url = https://github.com/OpenZeppelin/openzeppelin-contracts
