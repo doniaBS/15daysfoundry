@@ -15,10 +15,19 @@ jobs:
     steps:
       - uses: actions/checkout@v4
         with:
-          submodules: recursive
+          submodules: true
 
       - name: Install Foundry
-        uses: foundry-rs/foundry-toolchain@v1
+        uses: foundry-rs/foundry-toolchain@v1.1.0
+        with:
+          version: nightly
+          
+      - name: Debug Foundry install
+        run: |
+          ls -R ~/.foundry || true
+          echo "PATH=$PATH"
+          which forge || echo "forge not found"
+
 
       - name: Show Forge version
         run: |
