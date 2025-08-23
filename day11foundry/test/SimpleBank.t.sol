@@ -10,7 +10,7 @@ contract SimpleBankTest is Test {
 
     function setUp() public {
         bank = new SimpleBank();
-        vm.deal(user, 1 ether); // give user some ETH
+        vm.deal(user, 1 ether); // give user 1 ETH
     }
 
     function testDeposit() public {
