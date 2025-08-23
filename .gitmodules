@@ -40,3 +40,6 @@
 [submodule "day10foundry/lib/openzeppelin-contracts"]
 	path = day10foundry/lib/openzeppelin-contracts
 	url = https://github.com/openzeppelin/openzeppelin-contracts
+[submodule "day11foundry/lib/forge-std"]
+	path = day11foundry/lib/forge-std
+	url = https://github.com/foundry-rs/forge-std
