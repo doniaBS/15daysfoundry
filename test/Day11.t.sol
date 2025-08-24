@@ -22,10 +22,9 @@ contract SimpleBankTest is Test {
         vm.deal(address(this), 10 ether);
 
         bank.deposit{value: 2 ether}();
-         vm.expectRevert();
+        vm.expectRevert();
         bank.withdraw(1 ether);
     }
-
 
     function testWithdrawInsufficientBalance() public {
         bank.deposit{value: 1 ether}();
