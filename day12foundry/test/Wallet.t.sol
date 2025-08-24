@@ -11,16 +11,16 @@ contract WalletTest is Test {
     address c = address(0xC0DE);
 
     function setUp() public {
-        // first declare owners as a new array in memory
-        address;
+        // Declare the owners array first
+        address[] memory owners = new address[](3);
         owners[0] = a;
         owners[1] = b;
         owners[2] = c;
 
-        // now pass it into the Wallet constructor
+        // pass it into the Wallet constructor
         w = new Wallet(owners, 2);
 
-        // give some ETH to test accounts + wallet
+        // fund accounts
         vm.deal(a, 100 ether);
         vm.deal(b, 100 ether);
         vm.deal(c, 100 ether);
