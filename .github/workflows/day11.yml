@@ -7,7 +7,6 @@ on:
     branches: [master]
   workflow_dispatch:
 
-
 env:
   FOUNDRY_PROFILE: ci
 
@@ -16,36 +15,49 @@ jobs:
     name: Foundry project
     runs-on: ubuntu-latest
     steps:
+      # Checkout repo and submodules
       - uses: actions/checkout@v4
         with:
           submodules: recursive
 
+      # Cache Foundry dependencies
       - name: Cache Foundry dependencies
         uses: actions/cache@v3
         with:
           path: ~/.foundry/cache
           key: ${{ runner.os }}-foundry-${{ hashFiles('**/foundry.toml') }}
 
+      # Install Foundry toolchain
       - name: Install Foundry
         uses: foundry-rs/foundry-toolchain@v1
 
+      # Install Forge dependencies (like forge-std)
+      - name: Install Forge dependencies
+        run: forge install
+
+      # Show Forge version
       - name: Show Forge version
         run: forge --version
 
+      # Check formatting
       - name: Run Forge fmt
         run: forge fmt --check
         id: fmt
 
+      # Build project
       - name: Run Forge build
         run: forge build --sizes
         id: build
 
+      # Run tests
       - name: Run Forge tests
         run: forge test -vvv
         id: test
 
+      # Generate gas snapshot
       - name: Run gas snapshot
         run: forge snapshot --gas-report
 
+      # Run coverage
       - name: Run coverage
         run: forge coverage
