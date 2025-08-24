@@ -57,13 +57,22 @@ contract WalletTest is Test {
         assertEq(w.getTx(txId).confirmations, 0);
     }
 
-    // Fuzz: any two distinct owners can execute
-    function testFuzz_TwoDistinctOwnersExecute(address o1, address o2) public {
-        // constrain to actual owners
-        vm.assume(o1 == a || o1 == b || o1 == c);
-        vm.assume(o2 == a || o2 == b || o2 == c);
-        vm.assume(o1 != o2);
+    // Test specific owner combinations instead of fuzzing addresses
+    function testTwoDistinctOwnersExecute() public {
+        // Test all possible combinations of two distinct owners
+        address[] memory walletOwners = w.getOwners();
 
+        // Test a+b
+        testOwnerCombination(walletOwners[0], walletOwners[1]);
+
+        // Test a+c
+        testOwnerCombination(walletOwners[0], walletOwners[2]);
+
+        // Test b+c
+        testOwnerCombination(walletOwners[1], walletOwners[2]);
+    }
+
+    function testOwnerCombination(address o1, address o2) private {
         vm.prank(a);
         uint txId = w.submit(address(0xBEEF), 2 ether, "");
 
@@ -74,5 +83,8 @@ contract WalletTest is Test {
 
         assertTrue(w.getTx(txId).executed);
         assertEq(address(0xBEEF).balance, 2 ether);
+
+        // Reset balance for next test
+        vm.deal(address(0xBEEF), 0);
     }
 }
