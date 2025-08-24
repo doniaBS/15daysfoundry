@@ -11,14 +11,24 @@ contract WalletTest is Test {
     address c = address(0xC0DE);
 
     function setUp() public {
+        // first declare owners as a new array in memory
         address;
-        owners[0] = a; owners[1] = b; owners[2] = c;
+        owners[0] = a;
+        owners[1] = b;
+        owners[2] = c;
+
+        // now pass it into the Wallet constructor
         w = new Wallet(owners, 2);
+
+        // give some ETH to test accounts + wallet
         vm.deal(a, 100 ether);
         vm.deal(b, 100 ether);
         vm.deal(c, 100 ether);
         vm.deal(address(this), 100 ether);
-        (bool ok,) = address(w).call{value: 50 ether}(""); assertTrue(ok);
+
+        // deposit into the wallet
+        (bool ok, ) = address(w).call{value: 50 ether}("");
+        assertTrue(ok);
     }
 
     function testSubmitConfirmExecuteTransfer() public {
@@ -27,8 +37,10 @@ contract WalletTest is Test {
         uint txId = w.submit(address(0xdead), 1 ether, "");
 
         // confirm by A and B (auto-exec on 2nd confirm)
-        vm.prank(a); w.confirm(txId);
-        vm.prank(b); w.confirm(txId);
+        vm.prank(a);
+        w.confirm(txId);
+        vm.prank(b);
+        w.confirm(txId);
 
         assertTrue(w.getTx(txId).executed);
         assertEq(address(0xdead).balance, 1 ether);
@@ -55,8 +67,10 @@ contract WalletTest is Test {
         vm.prank(a);
         uint txId = w.submit(address(0xBEEF), 2 ether, "");
 
-        vm.prank(o1); w.confirm(txId);
-        vm.prank(o2); w.confirm(txId);
+        vm.prank(o1);
+        w.confirm(txId);
+        vm.prank(o2);
+        w.confirm(txId);
 
         assertTrue(w.getTx(txId).executed);
         assertEq(address(0xBEEF).balance, 2 ether);
