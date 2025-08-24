@@ -32,7 +32,6 @@ contract SimpleBankTest is Test {
         // Expect revert because trying to withdraw more than deposited
         vm.expectRevert();
         bank.withdraw(2 ether);
-        
     }
 
     function testDepositZeroReverts() public {
