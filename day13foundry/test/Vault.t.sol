@@ -8,13 +8,13 @@ contract VaultTest is Test {
     Vault vault;
     address owner = address(0xA11CE);
     address user = address(0xB0B);
-    address attackerEOA = address(0xA77A);
+    address attackerEoa = address(0xA77A);
 
     function setUp() public {
         vault = new Vault(owner);
         // Seed users with ETH
         vm.deal(user, 100 ether);
-        vm.deal(attackerEOA, 100 ether);
+        vm.deal(attackerEoa, 100 ether);
         vm.deal(owner, 100 ether);
     }
 
