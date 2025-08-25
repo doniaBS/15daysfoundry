@@ -6,13 +6,17 @@ import {MonthlySubscription} from "../src/Subscription.sol";
 
 contract SubscriptionTest is Test {
     MonthlySubscription public subscription;
-    address public owner = address(0x1);
+    address public owner = makeAddr("owner"); // Use a regular address
     address public subscriber1 = address(0x2);
     address public subscriber2 = address(0x3);
     
     uint256 public constant MONTHLY_RATE = 1 ether;
 
     function setUp() public {
+        // Fund the test addresses
+        vm.deal(subscriber1, 10 ether);
+        vm.deal(subscriber2, 10 ether);
+        vm.deal(owner, 5 ether);
         vm.prank(owner);
         subscription = new MonthlySubscription();
     }
