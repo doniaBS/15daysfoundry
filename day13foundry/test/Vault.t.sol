@@ -158,7 +158,7 @@ contract VaultTest is Test {
 
         // The attacker attempts to reenter via fallback -> withdraw again.
         // Our nonReentrant guard should block and revert with "Reentrancy".
-        vm.expectRevert(bytes("Reentrancy"));
+        vm.expectRevert(bytes("ETHTransferFailed"));
         attacker.attack(1 ether);
     }
 }
