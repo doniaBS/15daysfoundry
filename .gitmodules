@@ -49,3 +49,6 @@
 [submodule "day13foundry/lib/forge-std"]
 	path = day13foundry/lib/forge-std
 	url = https://github.com/foundry-rs/forge-std
+[submodule "day14foundry/lib/forge-std"]
+	path = day14foundry/lib/forge-std
+	url = https://github.com/foundry-rs/forge-std
